@@ -46,6 +46,11 @@ func main() {
 		userRoutes.PUT("/profile", userHandler.Update)
 	}
 
+	userNoAuthRoutes := server.Group("api/user")
+	{
+		userNoAuthRoutes.GET("/:user_id/tweet", tweetHandler.FindTweetsByUserID)
+	}
+
 	tweetRoutes := server.Group("api/tweet", middleware.AuthorizeJWT(jwtService))
 	{
 		tweetRoutes.GET("/", tweetHandler.All)
