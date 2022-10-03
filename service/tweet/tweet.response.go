@@ -6,16 +6,18 @@ import (
 )
 
 type TweetResponse struct {
-	ID        int64              `json:"id"`
+	ID           int64              `json:"id"`
 	TweetContent string             `json:"tweet_content"`
-	User      _user.UserResponse `json:"user,omitempty"`
+	CreatedAt    string             `json:"created_at"`
+	User         _user.UserResponse `json:"user,omitempty"`
 }
 
 func NewTweetResponse(tweet entity.Tweet) TweetResponse {
 	return TweetResponse{
-		ID:        tweet.ID,
+		ID:           tweet.ID,
 		TweetContent: tweet.Content,
-		User:      _user.NewUserResponse(tweet.User),
+		CreatedAt:    tweet.CreatedAt.String(),
+		User:         _user.NewUserResponse(tweet.User),
 	}
 }
 
@@ -23,9 +25,10 @@ func NewTweetArrayResponse(tweets []entity.Tweet) []TweetResponse {
 	tweetRes := []TweetResponse{}
 	for _, v := range tweets {
 		p := TweetResponse{
-			ID:        v.ID,
+			ID:           v.ID,
 			TweetContent: v.Content,
-			User:      _user.NewUserResponse(v.User),
+			CreatedAt:    v.CreatedAt.String(),
+			User:         _user.NewUserResponse(v.User),
 		}
 		tweetRes = append(tweetRes, p)
 	}

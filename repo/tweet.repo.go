@@ -12,7 +12,7 @@ type TweetRepository interface {
 	UpdateTweet(tweet entity.Tweet) (entity.Tweet, error)
 	DeleteTweet(tweetID string) error
 	FindOneTweetByID(ID string) (entity.Tweet, error)
-	FindAllTweet(userID string) ([]entity.Tweet, error)
+	// FindAllTweet(userID string) ([]entity.Tweet, error)
 }
 
 type tweetRepo struct {
@@ -27,7 +27,7 @@ func NewTweetRepo(connection *gorm.DB) TweetRepository {
 
 func (c *tweetRepo) All(userID string) ([]entity.Tweet, error) {
 	tweets := []entity.Tweet{}
-	c.connection.Preload("User").Where("user_id = ?", userID).Find(&tweets)
+	c.connection.Preload("User").Where("user_id = ?", userID).Order("created_at DESC").Find(&tweets)
 	return tweets, nil
 }
 
@@ -52,11 +52,11 @@ func (c *tweetRepo) FindOneTweetByID(tweetID string) (entity.Tweet, error) {
 	return tweet, nil
 }
 
-func (c *tweetRepo) FindAllTweet(userID string) ([]entity.Tweet, error) {
-	tweets := []entity.Tweet{}
-	c.connection.Where("user_id = ?", userID).Find(&tweets)
-	return tweets, nil
-}
+// func (c *tweetRepo) FindAllTweet(userID string) ([]entity.Tweet, error) {
+// 	tweets := []entity.Tweet{}
+// 	c.connection.Where("user_id = ?", userID).Find(&tweets)
+// 	return tweets, nil
+// }
 
 func (c *tweetRepo) DeleteTweet(tweetID string) error {
 	var tweet entity.Tweet
