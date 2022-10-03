@@ -4,7 +4,8 @@ import (
 	"errors"
 	"log"
 
-	"github.com/ydhnwb/golang_heroku/repo"
+	"go-sample/repo"
+
 	"golang.org/x/crypto/bcrypt"
 )
 

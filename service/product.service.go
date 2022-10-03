@@ -6,12 +6,13 @@ import (
 	"log"
 	"strconv"
 
-	"github.com/mashingan/smapping"
-	"github.com/ydhnwb/golang_heroku/dto"
-	"github.com/ydhnwb/golang_heroku/entity"
-	"github.com/ydhnwb/golang_heroku/repo"
+	"go-sample/dto"
+	"go-sample/entity"
+	"go-sample/repo"
 
-	_product "github.com/ydhnwb/golang_heroku/service/product"
+	"github.com/mashingan/smapping"
+
+	_product "go-sample/service/product"
 )
 
 type ProductService interface {

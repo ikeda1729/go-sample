@@ -4,10 +4,11 @@ import (
 	"log"
 	"net/http"
 
+	"go-sample/common/response"
+	"go-sample/service"
+
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
-	"github.com/ydhnwb/golang_heroku/common/response"
-	"github.com/ydhnwb/golang_heroku/service"
 )
 
 // AuthorizeJWT validates the token user given, return 401 if not valid

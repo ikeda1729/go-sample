@@ -1,13 +1,14 @@
 package main
 
 import (
+	"go-sample/config"
+	v1 "go-sample/handler/v1"
+	"go-sample/middleware"
+	"go-sample/repo"
+	"go-sample/service"
+
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	"github.com/ydhnwb/golang_heroku/config"
-	v1 "github.com/ydhnwb/golang_heroku/handler/v1"
-	"github.com/ydhnwb/golang_heroku/middleware"
-	"github.com/ydhnwb/golang_heroku/repo"
-	"github.com/ydhnwb/golang_heroku/service"
 	"gorm.io/gorm"
 )
 

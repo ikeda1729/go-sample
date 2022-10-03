@@ -1,7 +1,8 @@
 package repo
 
 import (
-	"github.com/ydhnwb/golang_heroku/entity"
+	"go-sample/entity"
+
 	"gorm.io/gorm"
 )
 

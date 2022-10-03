@@ -1,6 +1,6 @@
 package _user
 
-import "github.com/ydhnwb/golang_heroku/entity"
+import "go-sample/entity"
 
 type UserResponse struct {
 	ID    int64  `json:"id"`

@@ -5,12 +5,13 @@ import (
 	"net/http"
 	"strconv"
 
+	"go-sample/common/obj"
+	"go-sample/common/response"
+	"go-sample/dto"
+	"go-sample/service"
+
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
-	"github.com/ydhnwb/golang_heroku/common/obj"
-	"github.com/ydhnwb/golang_heroku/common/response"
-	"github.com/ydhnwb/golang_heroku/dto"
-	"github.com/ydhnwb/golang_heroku/service"
 )
 
 type ProductHandler interface {

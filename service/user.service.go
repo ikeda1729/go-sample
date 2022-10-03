@@ -4,11 +4,12 @@ import (
 	"errors"
 	"log"
 
+	"go-sample/dto"
+	"go-sample/entity"
+	"go-sample/repo"
+	_user "go-sample/service/user"
+
 	"github.com/mashingan/smapping"
-	"github.com/ydhnwb/golang_heroku/dto"
-	"github.com/ydhnwb/golang_heroku/entity"
-	"github.com/ydhnwb/golang_heroku/repo"
-	_user "github.com/ydhnwb/golang_heroku/service/user"
 	"gorm.io/gorm"
 )
 
