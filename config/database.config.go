@@ -30,7 +30,8 @@ func SetupDatabaseConnection() *gorm.DB {
 		panic("Failed to create a connection to database")
 	}
 
-	db.AutoMigrate(&entity.User{}, &entity.Product{})
+	// db.Migrator().DropTable(&entity.User{}, &entity.Tweet{})
+	db.AutoMigrate(&entity.User{}, &entity.Tweet{})
 	println("Database connected!")
 	return db
 }

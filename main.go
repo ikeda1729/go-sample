@@ -13,16 +13,16 @@ import (
 )
 
 var (
-	db             *gorm.DB               = config.SetupDatabaseConnection()
-	userRepo       repo.UserRepository    = repo.NewUserRepo(db)
-	productRepo    repo.ProductRepository = repo.NewProductRepo(db)
-	authService    service.AuthService    = service.NewAuthService(userRepo)
-	jwtService     service.JWTService     = service.NewJWTService()
-	userService    service.UserService    = service.NewUserService(userRepo)
-	productService service.ProductService = service.NewProductService(productRepo)
-	authHandler    v1.AuthHandler         = v1.NewAuthHandler(authService, jwtService, userService)
-	userHandler    v1.UserHandler         = v1.NewUserHandler(userService, jwtService)
-	productHandler v1.ProductHandler      = v1.NewProductHandler(productService, jwtService)
+	db           *gorm.DB             = config.SetupDatabaseConnection()
+	userRepo     repo.UserRepository  = repo.NewUserRepo(db)
+	tweetRepo    repo.TweetRepository = repo.NewTweetRepo(db)
+	authService  service.AuthService  = service.NewAuthService(userRepo)
+	jwtService   service.JWTService   = service.NewJWTService()
+	userService  service.UserService  = service.NewUserService(userRepo)
+	tweetService service.TweetService = service.NewTweetService(tweetRepo)
+	authHandler  v1.AuthHandler       = v1.NewAuthHandler(authService, jwtService, userService)
+	userHandler  v1.UserHandler       = v1.NewUserHandler(userService, jwtService)
+	tweetHandler v1.TweetHandler      = v1.NewTweetHandler(tweetService, jwtService)
 )
 
 func main() {
@@ -46,13 +46,13 @@ func main() {
 		userRoutes.PUT("/profile", userHandler.Update)
 	}
 
-	productRoutes := server.Group("api/product", middleware.AuthorizeJWT(jwtService))
+	tweetRoutes := server.Group("api/tweet", middleware.AuthorizeJWT(jwtService))
 	{
-		productRoutes.GET("/", productHandler.All)
-		productRoutes.POST("/", productHandler.CreateProduct)
-		productRoutes.GET("/:id", productHandler.FindOneProductByID)
-		productRoutes.PUT("/:id", productHandler.UpdateProduct)
-		productRoutes.DELETE("/:id", productHandler.DeleteProduct)
+		tweetRoutes.GET("/", tweetHandler.All)
+		tweetRoutes.POST("/", tweetHandler.CreateTweet)
+		tweetRoutes.GET("/:id", tweetHandler.FindOneTweetByID)
+		tweetRoutes.PUT("/:id", tweetHandler.UpdateTweet)
+		tweetRoutes.DELETE("/:id", tweetHandler.DeleteTweet)
 	}
 
 	checkRoutes := server.Group("api/check")

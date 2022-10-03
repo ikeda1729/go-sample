@@ -14,46 +14,46 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type ProductHandler interface {
+type TweetHandler interface {
 	All(ctx *gin.Context)
-	CreateProduct(ctx *gin.Context)
-	UpdateProduct(ctx *gin.Context)
-	DeleteProduct(ctx *gin.Context)
-	FindOneProductByID(ctx *gin.Context)
+	CreateTweet(ctx *gin.Context)
+	UpdateTweet(ctx *gin.Context)
+	DeleteTweet(ctx *gin.Context)
+	FindOneTweetByID(ctx *gin.Context)
 }
 
-type productHandler struct {
-	productService service.ProductService
-	jwtService     service.JWTService
+type tweetHandler struct {
+	tweetService service.TweetService
+	jwtService   service.JWTService
 }
 
-func NewProductHandler(productService service.ProductService, jwtService service.JWTService) ProductHandler {
-	return &productHandler{
-		productService: productService,
-		jwtService:     jwtService,
+func NewTweetHandler(tweetService service.TweetService, jwtService service.JWTService) TweetHandler {
+	return &tweetHandler{
+		tweetService: tweetService,
+		jwtService:   jwtService,
 	}
 }
 
-func (c *productHandler) All(ctx *gin.Context) {
+func (c *tweetHandler) All(ctx *gin.Context) {
 	authHeader := ctx.GetHeader("Authorization")
 	token := c.jwtService.ValidateToken(authHeader, ctx)
 	claims := token.Claims.(jwt.MapClaims)
 	userID := fmt.Sprintf("%v", claims["user_id"])
 
-	products, err := c.productService.All(userID)
+	tweets, err := c.tweetService.All(userID)
 	if err != nil {
 		response := response.BuildErrorResponse("Failed to process request", err.Error(), obj.EmptyObj{})
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, response)
 		return
 	}
 
-	response := response.BuildResponse(true, "OK!", products)
+	response := response.BuildResponse(true, "OK!", tweets)
 	ctx.JSON(http.StatusOK, response)
 }
 
-func (c *productHandler) CreateProduct(ctx *gin.Context) {
-	var createProductReq dto.CreateProductRequest
-	err := ctx.ShouldBind(&createProductReq)
+func (c *tweetHandler) CreateTweet(ctx *gin.Context) {
+	var createTweetReq dto.CreateTweetRequest
+	err := ctx.ShouldBind(&createTweetReq)
 
 	if err != nil {
 		response := response.BuildErrorResponse("Failed to process request", err.Error(), obj.EmptyObj{})
@@ -66,7 +66,7 @@ func (c *productHandler) CreateProduct(ctx *gin.Context) {
 	claims := token.Claims.(jwt.MapClaims)
 	userID := fmt.Sprintf("%v", claims["user_id"])
 
-	res, err := c.productService.CreateProduct(createProductReq, userID)
+	res, err := c.tweetService.CreateTweet(createTweetReq, userID)
 	if err != nil {
 		response := response.BuildErrorResponse("Failed to process request", err.Error(), obj.EmptyObj{})
 		ctx.AbortWithStatusJSON(http.StatusUnprocessableEntity, response)
@@ -78,10 +78,10 @@ func (c *productHandler) CreateProduct(ctx *gin.Context) {
 
 }
 
-func (c *productHandler) FindOneProductByID(ctx *gin.Context) {
+func (c *tweetHandler) FindOneTweetByID(ctx *gin.Context) {
 	id := ctx.Param("id")
 
-	res, err := c.productService.FindOneProductByID(id)
+	res, err := c.tweetService.FindOneTweetByID(id)
 	if err != nil {
 		response := response.BuildErrorResponse("Failed to process request", err.Error(), obj.EmptyObj{})
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, response)
@@ -92,7 +92,7 @@ func (c *productHandler) FindOneProductByID(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, response)
 }
 
-func (c *productHandler) DeleteProduct(ctx *gin.Context) {
+func (c *tweetHandler) DeleteTweet(ctx *gin.Context) {
 	id := ctx.Param("id")
 
 	authHeader := ctx.GetHeader("Authorization")
@@ -100,7 +100,7 @@ func (c *productHandler) DeleteProduct(ctx *gin.Context) {
 	claims := token.Claims.(jwt.MapClaims)
 	userID := fmt.Sprintf("%v", claims["user_id"])
 
-	err := c.productService.DeleteProduct(id, userID)
+	err := c.tweetService.DeleteTweet(id, userID)
 	if err != nil {
 		response := response.BuildErrorResponse("Failed to process request", err.Error(), obj.EmptyObj{})
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, response)
@@ -110,9 +110,9 @@ func (c *productHandler) DeleteProduct(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, response)
 }
 
-func (c *productHandler) UpdateProduct(ctx *gin.Context) {
-	updateProductRequest := dto.UpdateProductRequest{}
-	err := ctx.ShouldBind(&updateProductRequest)
+func (c *tweetHandler) UpdateTweet(ctx *gin.Context) {
+	updateTweetRequest := dto.UpdateTweetRequest{}
+	err := ctx.ShouldBind(&updateTweetRequest)
 
 	if err != nil {
 		response := response.BuildErrorResponse("Failed to process request", err.Error(), obj.EmptyObj{})
@@ -126,15 +126,15 @@ func (c *productHandler) UpdateProduct(ctx *gin.Context) {
 	userID := fmt.Sprintf("%v", claims["user_id"])
 
 	id, _ := strconv.ParseInt(ctx.Param("id"), 0, 64)
-	updateProductRequest.ID = id
-	product, err := c.productService.UpdateProduct(updateProductRequest, userID)
+	updateTweetRequest.ID = id
+	tweet, err := c.tweetService.UpdateTweet(updateTweetRequest, userID)
 	if err != nil {
 		response := response.BuildErrorResponse("Failed to process request", err.Error(), obj.EmptyObj{})
 		ctx.AbortWithStatusJSON(http.StatusUnprocessableEntity, response)
 		return
 	}
 
-	response := response.BuildResponse(true, "OK!", product)
+	response := response.BuildResponse(true, "OK!", tweet)
 	ctx.JSON(http.StatusOK, response)
 
 }

@@ -177,12 +177,12 @@ Response success (Status: 200)
 
 
 <b>=============================================</b>
-## All products (based on user who logged in)
-Only shows products by user who logged in
+## All tweets (based on user who logged in)
+Only shows tweets by user who logged in
 
 <b>GET</b>
 ```
-https://golang-heroku.herokuapp.com/api/product
+https://golang-heroku.herokuapp.com/api/tweet
 ```
 
 
@@ -200,7 +200,7 @@ Response success (Status: 200)
     "data": [
         {
             "id": 2,
-            "product_name": "Xiaomi Redmi 10",
+            "tweet_name": "Xiaomi Redmi 10",
             "price": 3000,
             "user": {
                 "id": 1,
@@ -210,7 +210,7 @@ Response success (Status: 200)
         },
         {
             "id": 3,
-            "product_name": "Indomie Goreng",
+            "tweet_name": "Indomie Goreng",
             "price": 2500,
             "user": {
                 "id": 1,
@@ -222,12 +222,12 @@ Response success (Status: 200)
 }
 ```
 
-## Create product
-Create a product with owner is the user who logged in
+## Create tweet
+Create a tweet with owner is the user who logged in
 
 <b>POST</b>
 ```
-https://golang-heroku.herokuapp.com/api/product
+https://golang-heroku.herokuapp.com/api/tweet
 ```
 
 Headers
@@ -251,7 +251,7 @@ Response success (Status: 201)
     "errors": null,
     "data": {
         "id": 1,
-        "product_name": "Xiaomi Redmi 5",
+        "tweet_name": "Xiaomi Redmi 5",
         "price": 3000,
         "user": {
             "id": 1,
@@ -262,12 +262,12 @@ Response success (Status: 201)
 }
 ```
 
-## Find one product by id
-Find product by id
+## Find one tweet by id
+Find tweet by id
 
 <b>GET</b>
 ```
-https://golang-heroku.herokuapp.com/api/product/{id}
+https://golang-heroku.herokuapp.com/api/tweet/{id}
 ```
 
 Headers
@@ -284,7 +284,7 @@ Response success (Status: 200)
     "errors": null,
     "data": {
         "id": 1,
-        "product_name": "Xiaomi Redmi 5",
+        "tweet_name": "Xiaomi Redmi 5",
         "price": 3000,
         "user": {
             "id": 1,
@@ -295,12 +295,12 @@ Response success (Status: 200)
 }
 ```
 
-## Update product
-<b>You can only update your own product If you are trying to update someone else product, it will return error. </b>  
+## Update tweet
+<b>You can only update your own tweet If you are trying to update someone else tweet, it will return error. </b>  
 
 <b>PUT</b>
 ```
-https://golang-heroku.herokuapp.com/api/product/{id}
+https://golang-heroku.herokuapp.com/api/tweet/{id}
 ```
 
 Request body
@@ -319,7 +319,7 @@ Response success (Status: 200)
     "errors": null,
     "data": {
         "id": 1,
-        "product_name": "Xiaomi Redmi 5 Plus",
+        "tweet_name": "Xiaomi Redmi 5 Plus",
         "price": 5000,
         "user": {
             "id": 1,
@@ -331,12 +331,12 @@ Response success (Status: 200)
 ```
 
 
-## Delete product
-You can only delete your own product
+## Delete tweet
+You can only delete your own tweet
 
 <b>DELETE</b>
 ```
-https://golang-heroku.herokuapp.com/api/product/{id}
+https://golang-heroku.herokuapp.com/api/tweet/{id}
 ```
 
 Response success (Status: 200)
