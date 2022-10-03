@@ -20,6 +20,7 @@ type TweetHandler interface {
 	UpdateTweet(ctx *gin.Context)
 	DeleteTweet(ctx *gin.Context)
 	FindOneTweetByID(ctx *gin.Context)
+	FindTweetsByUserID(ctx *gin.Context)
 }
 
 type tweetHandler struct {
@@ -39,6 +40,20 @@ func (c *tweetHandler) All(ctx *gin.Context) {
 	token := c.jwtService.ValidateToken(authHeader, ctx)
 	claims := token.Claims.(jwt.MapClaims)
 	userID := fmt.Sprintf("%v", claims["user_id"])
+
+	tweets, err := c.tweetService.All(userID)
+	if err != nil {
+		response := response.BuildErrorResponse("Failed to process request", err.Error(), obj.EmptyObj{})
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, response)
+		return
+	}
+
+	response := response.BuildResponse(true, "OK!", tweets)
+	ctx.JSON(http.StatusOK, response)
+}
+
+func (c *tweetHandler) FindTweetsByUserID(ctx *gin.Context) {
+	userID := ctx.Param("user_id")
 
 	tweets, err := c.tweetService.All(userID)
 	if err != nil {
