@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/ydhnwb/golang_heroku/config"
 	v1 "github.com/ydhnwb/golang_heroku/handler/v1"
@@ -26,6 +27,11 @@ var (
 func main() {
 	defer config.CloseDatabaseConnection(db)
 	server := gin.Default()
+
+	config := cors.DefaultConfig()
+	config.AllowOrigins = []string{"http://localhost:3000"}
+	config.AllowCredentials = true
+	server.Use(cors.New(config))
 
 	authRoutes := server.Group("api/auth")
 	{

@@ -4,17 +4,18 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/joho/godotenv"
 	"github.com/ydhnwb/golang_heroku/entity"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
-//SetupDatabaseConnection is creating a new connection to our database
+// SetupDatabaseConnection is creating a new connection to our database
 func SetupDatabaseConnection() *gorm.DB {
-	// errEnv := godotenv.Load()
-	// if errEnv != nil {
-	// 	panic("Failed to load env file. Make sure .env file is exists!")
-	// }
+	errEnv := godotenv.Load()
+	if errEnv != nil {
+		panic("Failed to load env file. Make sure .env file is exists!")
+	}
 
 	dbUser := os.Getenv("DB_USER")
 	dbPass := os.Getenv("DB_PASSWORD")
@@ -33,7 +34,7 @@ func SetupDatabaseConnection() *gorm.DB {
 	return db
 }
 
-//CloseDatabaseConnection method is closing a connection between your app and your db
+// CloseDatabaseConnection method is closing a connection between your app and your db
 func CloseDatabaseConnection(db *gorm.DB) {
 	dbSQL, err := db.DB()
 	if err != nil {

@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-//JWTService is a contract of what jwtService can do
+// JWTService is a contract of what jwtService can do
 type JWTService interface {
 	GenerateToken(userID string) string
 	ValidateToken(token string, ctx *gin.Context) *jwt.Token
@@ -25,7 +25,7 @@ type jwtService struct {
 	issuer    string
 }
 
-//NewJWTService method is creates a new instance of JWTService
+// NewJWTService method is creates a new instance of JWTService
 func NewJWTService() JWTService {
 	return &jwtService{
 		issuer:    "admin",
@@ -67,7 +67,7 @@ func (j *jwtService) ValidateToken(token string, ctx *gin.Context) *jwt.Token {
 	})
 
 	if err != nil {
-		return nil
+		return &jwt.Token{} // nilを返すとtoken.Validがエラーになるので修正
 	}
 
 	return t

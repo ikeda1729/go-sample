@@ -10,7 +10,7 @@ import (
 	"github.com/ydhnwb/golang_heroku/service"
 )
 
-//AuthorizeJWT validates the token user given, return 401 if not valid
+// AuthorizeJWT validates the token user given, return 401 if not valid
 func AuthorizeJWT(jwtService service.JWTService) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		authHeader := c.GetHeader("Authorization")
